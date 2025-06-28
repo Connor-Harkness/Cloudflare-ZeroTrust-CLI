@@ -1,0 +1,26 @@
+{
+  "name": "cloudflare-zerotrust-cli",
+  "version": "1.0.0",
+  "description": "CLI tool to manage Cloudflare ZeroTrust tunnels and resources",
+  "main": "src/index.js",
+  "bin": {
+    "zerotrust": "bin/zerotrust.js"
+  },
+  "scripts": {
+    "start": "node bin/zerotrust.js",
+    "test": "jest"
+  },
+  "keywords": ["cloudflare", "zerotrust", "tunnels", "cli"],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "cloudflare": "^3.3.0",
+    "commander": "^11.1.0",
+    "chalk": "^4.1.2",
+    "table": "^6.8.1",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
