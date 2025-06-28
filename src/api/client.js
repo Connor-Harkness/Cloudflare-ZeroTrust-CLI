@@ -5,13 +5,25 @@ class CloudflareClient {
   constructor(options = {}) {
     const credentials = config.getCredentials(options);
     
+    if (options.debug) {
+      console.log('Debug: Options received:', options);
+      console.log('Debug: Credentials resolved:', { 
+        token: credentials.token ? '[REDACTED]' : 'undefined',
+        accountId: credentials.accountId || 'undefined'
+      });
+    }
+    
     if (!credentials.token) {
       throw new Error('Cloudflare API token is required. Set CLOUDFLARE_API_TOKEN environment variable or use --token flag.');
     }
 
+    if (!credentials.accountId) {
+      throw new Error('Cloudflare account ID is required. Set CLOUDFLARE_ACCOUNT_ID environment variable or use --account-id flag.');
+    }
+
     this.accountId = credentials.accountId;
     this.cf = new Cloudflare({
-      token: credentials.token
+      apiToken: credentials.token
     });
 
     if (options.debug) {

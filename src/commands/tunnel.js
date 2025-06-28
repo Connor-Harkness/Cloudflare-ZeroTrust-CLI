@@ -12,7 +12,8 @@ function tunnelCommands(program) {
     .description('List all tunnels')
     .action(async (options, command) => {
       try {
-        const globalOpts = command.parent.opts();
+        // Fix: Access global options from the root program
+        const globalOpts = command.parent.parent.opts();
         const client = new CloudflareClient(globalOpts);
         const tunnels = await client.listTunnels();
         
@@ -40,7 +41,7 @@ function tunnelCommands(program) {
     .description('Show detailed information about a tunnel')
     .action(async (tunnelId, options, command) => {
       try {
-        const globalOpts = command.parent.opts();
+        const globalOpts = command.parent.parent.opts();
         const client = new CloudflareClient(globalOpts);
         const tunnelData = await client.getTunnel(tunnelId);
         
@@ -58,7 +59,7 @@ function tunnelCommands(program) {
     .option('-s, --secret <secret>', 'Tunnel secret (will generate if not provided)')
     .action(async (name, options, command) => {
       try {
-        const globalOpts = command.parent.opts();
+        const globalOpts = command.parent.parent.opts();
         const client = new CloudflareClient(globalOpts);
         
         const tunnelSecret = options.secret || crypto.randomBytes(32).toString('base64');
@@ -82,7 +83,7 @@ function tunnelCommands(program) {
     .option('-y, --yes', 'Skip confirmation')
     .action(async (tunnelId, options, command) => {
       try {
-        const globalOpts = command.parent.opts();
+        const globalOpts = command.parent.parent.opts();
         const client = new CloudflareClient(globalOpts);
         
         if (!options.yes) {
@@ -107,7 +108,7 @@ function tunnelCommands(program) {
     .description('List hostnames for a tunnel')
     .action(async (tunnelId, options, command) => {
       try {
-        const globalOpts = command.parent.opts();
+        const globalOpts = command.parent.parent.parent.opts();
         const client = new CloudflareClient(globalOpts);
         const routes = await client.listTunnelRoutes(tunnelId);
         
